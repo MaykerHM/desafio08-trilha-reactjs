@@ -9,6 +9,30 @@ import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 
 export default function Home(): JSX.Element {
+  interface GetImagesParam {
+    pageParam?: string;
+  }
+
+  interface ImageData {
+    title: string;
+    description: string;
+    url: string;
+    ts: number;
+    id: string;
+  }
+
+  interface PageData {
+    data: ImageData[];
+    after?: string;
+  }
+
+  const getImages = async ({
+    pageParam = null,
+  }: GetImagesParam): Promise<PageData> => {
+    const response = await api.get(`/api/images/${pageParam}`);
+    return response;
+  };
+
   const {
     data,
     isLoading,
@@ -19,8 +43,11 @@ export default function Home(): JSX.Element {
   } = useInfiniteQuery(
     'images',
     // TODO AXIOS REQUEST WITH PARAM
-    ,
+    getImages,
     // TODO GET AND RETURN NEXT PAGE PARAM
+    {
+      getNextPageParam: (lastPage, pages) => lastPage.after,
+    }
   );
 
   const formattedData = useMemo(() => {
