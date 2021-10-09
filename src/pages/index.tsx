@@ -29,7 +29,11 @@ export default function Home(): JSX.Element {
   const getImages = async ({
     pageParam = null,
   }: GetImagesParam): Promise<PageData> => {
-    const response = await api.get(`/api/images/${pageParam}`);
+    const response = await api.get('/api/images', {
+      params: {
+        after: pageParam
+      }
+    });
     return response;
   };
 
@@ -46,7 +50,12 @@ export default function Home(): JSX.Element {
     getImages,
     // TODO GET AND RETURN NEXT PAGE PARAM
     {
-      getNextPageParam: (lastPage, pages) => lastPage.after,
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.after) {
+          return lastPage.after;
+        }
+        return null;
+      },
     }
   );
 
