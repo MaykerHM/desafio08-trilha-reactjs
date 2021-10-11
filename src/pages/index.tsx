@@ -22,7 +22,9 @@ export default function Home(): JSX.Element {
   }
 
   interface PageData {
-    data: ImageData[];
+    data: {
+      data:ImageData[]
+    };
     after?: string;
   }
 
@@ -46,11 +48,11 @@ export default function Home(): JSX.Element {
     hasNextPage,
   } = useInfiniteQuery(
     'images',
-    // TODO AXIOS REQUEST WITH PARAM
+    // TODO AXIOS REQUEST WITH PARAM ok
     getImages,
-    // TODO GET AND RETURN NEXT PAGE PARAM
+    // TODO GET AND RETURN NEXT PAGE PARAM ok
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         if (lastPage.after) {
           return lastPage.after;
         }
@@ -60,12 +62,18 @@ export default function Home(): JSX.Element {
   );
 
   const formattedData = useMemo(() => {
-    // TODO FORMAT AND FLAT DATA ARRAY
+    // TODO FORMAT AND FLAT DATA ARRAY ok
+    if(data?.pages) {
+      let newData = data.pages.map(page => page.data.data).flat()
+      return newData
+    }
   }, [data]);
 
-  // TODO RENDER LOADING SCREEN
+  // TODO RENDER LOADING SCREEN ok
+  isLoading ?? <Loading/>
 
-  // TODO RENDER ERROR SCREEN
+  // TODO RENDER ERROR SCREEN ok
+  isError ?? <Error />
 
   return (
     <>
