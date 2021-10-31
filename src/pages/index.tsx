@@ -22,9 +22,7 @@ export default function Home(): JSX.Element {
   }
 
   interface PageData {
-    data: {
-      data:ImageData[]
-    };
+    data: ImageData[]
     after?: string;
   }
 
@@ -36,7 +34,7 @@ export default function Home(): JSX.Element {
         after: pageParam
       }
     });
-    return response;
+    return response.data
   };
 
   const {
@@ -52,25 +50,20 @@ export default function Home(): JSX.Element {
     getImages,
     // TODO GET AND RETURN NEXT PAGE PARAM ok
     {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.after) {
-          return lastPage.after;
-        }
-        return null;
-      },
+      getNextPageParam: lastPage => lastPage.after ?? null
     }
   );
 
   const formattedData = useMemo(() => {
     // TODO FORMAT AND FLAT DATA ARRAY ok
-    if(data?.pages) {
-      let newData = data.pages.map(page => page.data.data).flat()
+    if (data?.pages) {
+      let newData = data.pages.map(page => page.data).flat()
       return newData
     }
   }, [data]);
 
   // TODO RENDER LOADING SCREEN ok
-  isLoading ?? <Loading/>
+  isLoading ?? <Loading />
 
   // TODO RENDER ERROR SCREEN ok
   isError ?? <Error />
@@ -79,10 +72,10 @@ export default function Home(): JSX.Element {
     <>
       <Header />
 
-      <Box maxW={1120} px={20} mx="auto" my={20}>
-        <CardList cards={formattedData} />
+      <Box maxW={ 1120 } px={ 20 } mx="auto" my={ 20 }>
+        <CardList cards={ formattedData } />
         {/* TODO RENDER LOAD MORE BUTTON IF DATA HAS NEXT PAGE */
-        hasNextPage ?? <Button width="5" onClick={()=>fetchNextPage()}>{isFetchingNextPage ? "Carregar mais": "Carregando..."}</Button>}
+          hasNextPage && <Button mt="40px" onClick={ () => fetchNextPage() } isLoading={ isFetchingNextPage } loadingText="Carregando...">Carregar mais</Button> }
       </Box>
     </>
   );
