@@ -24,9 +24,9 @@ export function ModalViewImage({
   return (
     <Modal isOpen={ isOpen } onClose={ onClose } isCentered={ true }>
       <ModalOverlay />
-      <ModalContent maxW="900px" maxH="600px">
+      <ModalContent width="fit-content" height="fit-content">
         <ModalBody padding="0" >
-          <Image src={ imgUrl }></Image>
+          <Image maxH="600px" maxW="900px" src={ imgUrl }></Image>
         </ModalBody>
         <ModalFooter backgroundColor="pGray.800">
           <Link href={ imgUrl } target="_blank" justifyContent="flex-start" w="full" isExternal>Abrir original</Link>
