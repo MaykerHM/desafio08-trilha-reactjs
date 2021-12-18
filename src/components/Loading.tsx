@@ -11,7 +11,7 @@ export function Loading(): JSX.Element {
       <Box>
         <Heading>Carregando aplicação...</Heading>
         <Progress
-          mt={4}
+          mt={ 4 }
           size="xs"
           isIndeterminate
           bgColor="transparent"

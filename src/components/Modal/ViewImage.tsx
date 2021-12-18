@@ -7,7 +7,6 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
-import { Card } from '../Card';
 
 interface ModalViewImageProps {
   isOpen: boolean;
@@ -20,18 +19,24 @@ export function ModalViewImage({
   onClose,
   imgUrl,
 }: ModalViewImageProps): JSX.Element {
-  // TODO MODAL WITH IMAGE AND EXTERNAL LINK
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={ isOpen } onClose={ onClose } isCentered={ true }>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent
+        mx="auto"
+        w="auto"
+        h="auto"
+        bg="pGray.800"
+        maxW={ ['450px', '750px', '900px'] }
+        maxH={ ['300px', '500px', '600px'] }
+      >
         <ModalBody padding="0">
-          <Image src={imgUrl} maxW="900px" maxH="600px" ></Image>
+          <Image src={ imgUrl }></Image>
         </ModalBody>
-        <ModalFooter backgroundColor="pGray.800">
-          <Link href={imgUrl} target="_blank" justifyContent="flex-start" w="full" isExternal>Abrir original</Link>
+        <ModalFooter backgroundColor="pGray.800" borderBottomRadius="1rem" w="full" justifyContent="flex-start">
+          <Link href={ imgUrl } target="_blank" isExternal>Abrir original</Link>
         </ModalFooter>
       </ModalContent>
-    </Modal>
+    </Modal >
   )
 }
