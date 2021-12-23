@@ -27,8 +27,8 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
     image: {
       required: 'Arquivo obrigatório',
       validate: {
-        lessThan10MB: file => file[0].size < 10 * 1024 * 1024 || 'O arquivo deve ser menor que 10MB',
-        acceptedFormats: file => file[0].type.match(/image\/(jpeg|png|gif)/) || 'Somente são aceitos arquivos PNG, JPEG e GIF'
+        lessThan10MB: file => file[0].size < 10485760 || 'O arquivo deve ser menor que 10MB',
+        acceptedFormats: file => /image\/(jpeg|png|gif)/.test(file[0].type) || 'Somente são aceitos arquivos PNG, JPEG e GIF'
       }
     },
     title: {
